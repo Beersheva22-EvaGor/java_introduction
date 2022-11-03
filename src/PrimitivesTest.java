@@ -92,4 +92,5 @@ class PrimitivesTest {
 		assertEquals(8, Numbers.getNdigits(12345678));
 		assertEquals(10, Numbers.getNdigits(1234567890));
 	}
+
 }

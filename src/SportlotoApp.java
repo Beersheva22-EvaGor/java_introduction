@@ -16,9 +16,9 @@ public class SportlotoApp {
 	
 	/* Global variable that stores all 1 in a binary code at the very beginning 
 	* and changes bites to 0 if this variable was used
-	* NB. Only for numbers less than 64
+	* NB. Only for numbers less than 64 
 	*/
-	private static long container = -1L; 
+	private static long container = 0; 
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -37,8 +37,8 @@ public class SportlotoApp {
 		{
 			res = min + (int)Math.round(Math.random()*(max - min));
 		}
-		while (BitOperations.getBitValue(container, res) == 0);
-		container = BitOperations.invertBitValue(container, res);
+		while (BitOperations.getBitValue(container, res-1) == 1);
+		container = BitOperations.invertBitValue(container, res-1);
 		return res;
 	}
 	
