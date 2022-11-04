@@ -20,20 +20,6 @@ public class Numbers {
 	/**
 	 * 
 	 * @param number
-	 * @param position starts from 1
-	 * @return the digit in a number on the defined in arguments position
-	 */
-	static public int getDigitInNumber(int number, int position)
-	{
-		int res = -1;
-		//TODO Check position must be less than number length
-		res = (int)(number / Math.pow(10, getNdigits(number)-position)) %10;
-		return res;
-	}
-	
-	/**
-	 * 
-	 * @param number
 	 * @return true only if number comprises of 6 digits
 	 * and sum of the first three digits is equal to the sum if the last three digits
 	 */
@@ -47,7 +33,7 @@ public class Numbers {
 			oper=0;			
 			for (int i = 1; i<=length; i++ )
 			{
-				oper = i<=3? oper + getDigitInNumber(number, i) : oper - getDigitInNumber(number, i);
+				oper = oper + ((int)(number / Math.pow(10, length-i)) %10 )*(i<=3? 1:-1);
 			}
 			
 		}

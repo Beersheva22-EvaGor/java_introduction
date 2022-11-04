@@ -79,6 +79,7 @@ class PrimitivesTest {
 		assertEquals(false, Numbers.isHappyNumber(123456));
 		assertEquals(false, Numbers.isHappyNumber(143456));
 		assertEquals(true, Numbers.isHappyNumber(195456));
+		assertEquals(false, Numbers.isHappyNumber(010100));
 	}
 	
 	@Test 
