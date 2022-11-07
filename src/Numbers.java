@@ -32,7 +32,7 @@ public class Numbers {
 			// in a result sum of first three digits minus sum of right 3 digits must be 0
 			oper=0;			
 			for (int i = 1; i<=length; i++ )
-			{			
+			{ 			
 				oper = oper + ((int)(number / Math.pow(10, length-i)) %10 )*(i<=3? 1:-1);
 			}
 			
