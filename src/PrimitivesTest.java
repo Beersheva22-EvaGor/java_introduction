@@ -82,16 +82,5 @@ class PrimitivesTest {
 		assertEquals(false, Numbers.isHappyNumber(010100));
 	}
 	
-	@Test 
-	@Disabled
-	void getDigitInNumberTest()
-	{
-		assertEquals(3, Numbers.getDigitInNumber(123456, 3));
-		assertEquals(1, Numbers.getDigitInNumber(123456, 1));
-		assertEquals(6, Numbers.getDigitInNumber(123456, 6));
-		
-		assertEquals(8, Numbers.getNdigits(12345678));
-		assertEquals(10, Numbers.getNdigits(1234567890));
-	}
 
 }
