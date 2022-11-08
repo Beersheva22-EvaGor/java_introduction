@@ -33,11 +33,13 @@ public class Numbers {
 			oper=0;			
 			for (int i = 1; i<=length; i++ )
 			{ 			
-				oper = oper + ((int)(number / Math.pow(10, length-i)) %10 )*(i<=3? 1:-1);
+				oper = oper + ((int)(number / Math.pow(10, length-i)) %10 )*(i<=nDigits/2? 1:-1);
 			}
 			
 		}
 		
 		return oper == 0;
 	}
+	
+	
 }
