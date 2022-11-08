@@ -20,9 +20,6 @@ public class BitOperations {
 			long mask = getMask(nBit);
 			
 			res = (number & mask) ==0 ? 0:1;
-			/*
-			 * if ((number & mask) ==0) { res = 0; } else res = 1;
-			 */
 		}
 		return res;
 	}
@@ -73,7 +70,7 @@ public class BitOperations {
 			res = number ^ mask;
 		}
 		return res;
-		//return checkNbit(nBit)? setBitValue(number, nBit, getBitValue(number, nBit)==1 ?false:true):-1;
+	
 	}
 	
 	// quantity 
@@ -100,8 +97,7 @@ public class BitOperations {
 			{
 				res++;
 			}
-			// OR:
-			//res +=getBitValue(number, i);
+			// OR: res +=getBitValue(number, i);
 		}
 		return res;
 	}

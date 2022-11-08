@@ -29,12 +29,17 @@ public class SportlotoApp {
 
 	}
 	
+	public static int getRandom(int min, int max)
+	{
+		return min + (int)Math.round(Math.random()*(max - min));
+	}
+	
 	public static int getRandomInt(int min, int max)
 	{			
 		int res;
 		do
 		{
-			res = min + (int)Math.round(Math.random()*(max - min));
+			res = getRandom(min, max);
 		}
 		while (BitOperations.getBitValue(container, res-1) == 0);
 		container = BitOperations.invertBitValue(container, res-1);
