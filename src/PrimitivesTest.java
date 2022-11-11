@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -100,6 +102,7 @@ class PrimitivesTest {
 	}
 
 	@Test
+	@Disabled
 	void verifyTest() {
 		int id = 346845613; // right case, sum is 40
 		assertTrue(IsraelIdentity.verify(id));
@@ -112,6 +115,7 @@ class PrimitivesTest {
 	}
 
 	@Test
+	@Disabled
 	void generateRandomIdTest() {
 		int cycleNum = 10; // number of times to check the randomly created id fits to the claims
 		for (int i = 0; i < cycleNum; i++) {
@@ -120,6 +124,7 @@ class PrimitivesTest {
 	}
 
 	@Test
+	@Disabled
 	void addsNumberTest() {
 		int[] array = { 1, 2, 3, 4, 5 };
 		int number = 6;
@@ -127,6 +132,7 @@ class PrimitivesTest {
 	}
 
 	@Test
+	@Disabled
 	void removeNumberTest() {
 		// usual case
 		int[] array = { 0, 1, 2, 3, 4, 5 };
@@ -143,10 +149,11 @@ class PrimitivesTest {
 		index = 0;
 		assertArrayEquals(new int[] { 1, 2, 3, 4, 5 }, MyArrays.removeNumber(array, index));
 		index = array.length - 1;
-		assertArrayEquals(new int[] { 0, 1, 2, 3, 4}, MyArrays.removeNumber(array, index));
+		assertArrayEquals(new int[] { 0, 1, 2, 3, 4 }, MyArrays.removeNumber(array, index));
 	}
 
 	@Test
+	@Disabled
 	void insertSortedTest() {
 		// this number is in the array
 		int[] array = { 0, 1, 2, 3, 4, 5 };
@@ -164,5 +171,60 @@ class PrimitivesTest {
 		// the number is less than a minimum
 		number = -500;
 		assertArrayEquals(new int[] { -500, 0, 1, 2, 3, 4, 5 }, MyArrays.insertSorted(array, number));
+	}
+
+	@Test
+	void binarySearchFirstTest() {
+		int myarray[] = { 0, 0, 0, 1, 2, 3, 3, 3, 4, 5, 5 };
+		assertEquals(5, MyArrays.binarySearchFirst(myarray, 3)); // middle placed
+		assertEquals(0, MyArrays.binarySearchFirst(myarray, 0)); // left edge
+		assertEquals(9, MyArrays.binarySearchFirst(myarray, 5)); // right edge
+		assertEquals(-1, MyArrays.binarySearchFirst(myarray, 500)); // no number inside
+	}
+
+	@Test
+	void oneReplaceNeededTest() {
+		assertTrue(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 5, 2, 3, 4, 6, 7 })); // only one replacing in middle
+		assertTrue(MyArrays.oneReplaceNeeded(new int[] { 5, 0, 1, 2, 3, 4, 6, 7 })); // only one replacing at the
+																						// beginning
+		assertTrue(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 2, 3, 4, 6, 7, 5 })); // only one replacing at the end
+		assertFalse(MyArrays.oneReplaceNeeded(new int[] { 0, 5, 2, 6, 1, 7, 4, 3 })); // >1 replacing needed
+		assertFalse(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 })); // sorted, no need replacing
+		assertFalse(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 2, 3, 3, 4, 5, 6 })); // double number, no need replacing
+	}
+
+	@Test
+	void binarySearchInt() {
+		int arraySorted[] = {0, 3, 6, 8, 10, 12};
+		assertEquals(Arrays.binarySearch(arraySorted, 0), MyArrays.binarySearchInt(arraySorted, 0)); // 1st numbers in array, inside
+		assertEquals(Arrays.binarySearch(arraySorted, 8), MyArrays.binarySearchInt(arraySorted, 8)); // in the middle of array, inside
+		assertEquals(Arrays.binarySearch(arraySorted, 12), MyArrays.binarySearchInt(arraySorted, 12)); // last numbers in array, inside
+		assertEquals(Arrays.binarySearch(arraySorted, -5), MyArrays.binarySearchInt(arraySorted, -5)); // out of range - left
+		assertEquals(Arrays.binarySearch(arraySorted, 100), MyArrays.binarySearchInt(arraySorted, 100)); // out of range - right	
+		assertEquals(Arrays.binarySearch(arraySorted, 4), MyArrays.binarySearchInt(arraySorted, 4)); // in range, but doesn't belong (center)
+		assertEquals(Arrays.binarySearch(arraySorted, 2), MyArrays.binarySearchInt(arraySorted, 2)); // in range, but doesn't belong (beginning)
+		
+	}
+	
+	@Test
+	void arrayBubbleSorterTest() {
+		int arrayUnsorted[] = {0, 3, -1, -2, 6, 8, 13, 10, 15, 2, 3, 12};
+		int [] copyArray = Arrays.copyOf(arrayUnsorted, arrayUnsorted.length);
+		int iter = MyArrays.arrayBubbleSorter(copyArray);
+		Arrays.sort(arrayUnsorted);
+		assertArrayEquals(arrayUnsorted, copyArray); 				// partly sorted 
+		System.out.println("Middle case - partly sorted. Number of iterations: " +iter);
+		
+		System.out.println("Best case - fully sorted. Number of iterations: " +MyArrays.arrayBubbleSorter(arrayUnsorted));
+		
+		int arrayFullyUnsorted[] = {50, 30, 10, 2, 0, -3, -7 , -9};
+		copyArray = Arrays.copyOf(arrayFullyUnsorted, arrayFullyUnsorted.length);
+		iter = MyArrays.arrayBubbleSorter(copyArray);
+		System.out.println("Worst case - fully unsorted. Number of iterations: " +iter);
+		Arrays.sort(arrayFullyUnsorted);
+		assertArrayEquals(arrayFullyUnsorted, copyArray);				// worst case - fully unsorted
+		
+		
+		
 	}
 }
