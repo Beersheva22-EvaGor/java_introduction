@@ -175,56 +175,83 @@ class PrimitivesTest {
 
 	@Test
 	void binarySearchFirstTest() {
-		int myarray[] = { 0, 0, 0, 1, 2, 3, 3, 3, 4, 5, 5 };
-		assertEquals(5, MyArrays.binarySearchFirst(myarray, 3)); // middle placed
+		int myarray[] = { 0, 0, 0, 1, 2, 4, 4, 4, 5, 5 };
+		assertEquals(5, MyArrays.binarySearchFirst(myarray, 4)); // middle placed
 		assertEquals(0, MyArrays.binarySearchFirst(myarray, 0)); // left edge
-		assertEquals(9, MyArrays.binarySearchFirst(myarray, 5)); // right edge
+		assertEquals(8, MyArrays.binarySearchFirst(myarray, 5)); // right edge
 		assertEquals(-1, MyArrays.binarySearchFirst(myarray, 500)); // no number inside
+		assertEquals(-1, MyArrays.binarySearchFirst(myarray, -500)); // no number inside
+		assertEquals(-1, MyArrays.binarySearchFirst(myarray, 3)); // no number inside
 	}
 
 	@Test
-	void oneReplaceNeededTest() {
-		assertTrue(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 5, 2, 3, 4, 6, 7 })); // only one replacing in middle
-		assertTrue(MyArrays.oneReplaceNeeded(new int[] { 5, 0, 1, 2, 3, 4, 6, 7 })); // only one replacing at the
-																						// beginning
-		assertTrue(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 2, 3, 4, 6, 7, 5 })); // only one replacing at the end
-		assertFalse(MyArrays.oneReplaceNeeded(new int[] { 0, 5, 2, 6, 1, 7, 4, 3 })); // >1 replacing needed
-		assertFalse(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 })); // sorted, no need replacing
-		assertFalse(MyArrays.oneReplaceNeeded(new int[] { 0, 1, 2, 3, 3, 4, 5, 6 })); // double number, no need replacing
+	void isOneSwapTestFalse() {
+		int ar1[] = { 1, 2, 3, 10, -1, 5, 6 };
+		int ar2[] = { 1, 2, 3, 4, 5, 10 };
+		int ar3[] = { 5, 1, 2, 4, 6, 10 };
+		int ar4[] = { 1, 5, 2, 4, 3, 10 };
+		int ar5[] = { 1, 3, 2, 5, 4, 10, 8 };
+		int ar6[] = { 1, 3, 20, 4, 5, 6, 10 };
+		int ar7[] = { 1, 3, 20, 4, 5, 11, 2 };
+		assertFalse(MyArrays.isOneSwap(ar1));
+		assertFalse(MyArrays.isOneSwap(ar2));
+		assertFalse(MyArrays.isOneSwap(ar3));
+		assertFalse(MyArrays.isOneSwap(ar4));
+		assertFalse(MyArrays.isOneSwap(ar5));
+		assertFalse(MyArrays.isOneSwap(ar6));
+		assertFalse(MyArrays.isOneSwap(ar7));
+	}
+
+	@Test	
+	void isOneSwapTestTrue() {
+		int ar1[] = { 10, 2, 3, 4, 1 };
+		int ar2[] = { 1, 2, 4, 3, 5, 10 };
+		int ar3[] = { 1, 2, 3, 10, 5, 4 };
+		int ar4[] = { 1, 5, 3, 4, 2, 10 };
+		int ar5[] = { 1, 2, 3, 4, 10, 5 };
+		int ar6[] = { 2, 1, -3, 4, 5, 10 };
+		int ar7[] = { 3, 2, 1, 4, 5, 6 };
+		assertTrue(MyArrays.isOneSwap(ar1));
+		assertTrue(MyArrays.isOneSwap(ar2));
+		assertTrue(MyArrays.isOneSwap(ar3));
+		assertTrue(MyArrays.isOneSwap(ar4));
+		assertTrue(MyArrays.isOneSwap(ar5));
+		assertTrue(MyArrays.isOneSwap(ar6));
+		assertTrue(MyArrays.isOneSwap(ar7));
 	}
 
 	@Test
 	void binarySearchInt() {
-		int arraySorted[] = {0, 3, 6, 8, 10, 12};
-		assertEquals(Arrays.binarySearch(arraySorted, 0), MyArrays.binarySearchInt(arraySorted, 0)); // 1st numbers in array, inside
-		assertEquals(Arrays.binarySearch(arraySorted, 8), MyArrays.binarySearchInt(arraySorted, 8)); // in the middle of array, inside
-		assertEquals(Arrays.binarySearch(arraySorted, 12), MyArrays.binarySearchInt(arraySorted, 12)); // last numbers in array, inside
-		assertEquals(Arrays.binarySearch(arraySorted, -5), MyArrays.binarySearchInt(arraySorted, -5)); // out of range - left
-		assertEquals(Arrays.binarySearch(arraySorted, 100), MyArrays.binarySearchInt(arraySorted, 100)); // out of range - right	
-		assertEquals(Arrays.binarySearch(arraySorted, 4), MyArrays.binarySearchInt(arraySorted, 4)); // in range, but doesn't belong (center)
-		assertEquals(Arrays.binarySearch(arraySorted, 2), MyArrays.binarySearchInt(arraySorted, 2)); // in range, but doesn't belong (beginning)
-		
+		int arraySorted[] = { 0, 3, 6, 8, 10, 12 };
+		// 1st numbers in array, inside
+		assertEquals(Arrays.binarySearch(arraySorted, 0), MyArrays.binarySearchInt(arraySorted, 0)); 
+		// in the middle of array, inside
+		assertEquals(Arrays.binarySearch(arraySorted, 8), MyArrays.binarySearchInt(arraySorted, 8)); 
+		// last numbers in array, inside
+		assertEquals(Arrays.binarySearch(arraySorted, 12), MyArrays.binarySearchInt(arraySorted, 12)); 
+		// out of range - left
+		assertEquals(Arrays.binarySearch(arraySorted, -5), MyArrays.binarySearchInt(arraySorted, -5)); 
+		// out of range - right
+		assertEquals(Arrays.binarySearch(arraySorted, 100), MyArrays.binarySearchInt(arraySorted, 100)); 
+		// in range, but doesn't belong (center)
+		assertEquals(Arrays.binarySearch(arraySorted, 4), MyArrays.binarySearchInt(arraySorted, 4)); 
+		// in range, but doesn't  belong (beginning)
+		assertEquals(Arrays.binarySearch(arraySorted, 2), MyArrays.binarySearchInt(arraySorted, 2)); 
+
 	}
-	
+
 	@Test
 	void arrayBubbleSorterTest() {
-		int arrayUnsorted[] = {0, 3, -1, -2, 6, 8, 13, 10, 15, 2, 3, 12};
-		int [] copyArray = Arrays.copyOf(arrayUnsorted, arrayUnsorted.length);
-		int iter = MyArrays.arrayBubbleSorter(copyArray);
+		int arrayUnsorted[] = { 0, 3, -1, -2, 6, 8, 13, 10, 15, 2, 3, 12 };
+		int[] copyArray = Arrays.copyOf(arrayUnsorted, arrayUnsorted.length);
+		MyArrays.arrayBubbleSorter(copyArray);
 		Arrays.sort(arrayUnsorted);
-		assertArrayEquals(arrayUnsorted, copyArray); 				// partly sorted 
-		System.out.println("Middle case - partly sorted. Number of iterations: " +iter);
-		
-		System.out.println("Best case - fully sorted. Number of iterations: " +MyArrays.arrayBubbleSorter(arrayUnsorted));
-		
-		int arrayFullyUnsorted[] = {50, 30, 10, 2, 0, -3, -7 , -9};
+		assertArrayEquals(arrayUnsorted, copyArray); // partly sorted
+		int arrayFullyUnsorted[] = { 50, 30, 10, 2, 0, -3, -7, -9 };
 		copyArray = Arrays.copyOf(arrayFullyUnsorted, arrayFullyUnsorted.length);
-		iter = MyArrays.arrayBubbleSorter(copyArray);
-		System.out.println("Worst case - fully unsorted. Number of iterations: " +iter);
+		MyArrays.arrayBubbleSorter(copyArray);
 		Arrays.sort(arrayFullyUnsorted);
-		assertArrayEquals(arrayFullyUnsorted, copyArray);				// worst case - fully unsorted
-		
-		
-		
+		assertArrayEquals(arrayFullyUnsorted, copyArray); // worst case - fully unsorted
+
 	}
 }

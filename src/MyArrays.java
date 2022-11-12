@@ -106,27 +106,19 @@ public class MyArrays {
 	 * @return first index of aiming number
 	 */
 	public static int binarySearchFirst(int arraySorted[], int number) {
-		int res = binarySearch(arraySorted, number);
-		if (res > -1) {
-			res = searchLeft(Arrays.copyOf(arraySorted, res + 1));
-		}
-		return res;
-	}
-
-	private static int searchLeft(int[] arraySorted) {
-		int aim = arraySorted[arraySorted.length - 1];
 		int left = 0;
 		int right = arraySorted.length - 1;
 		int middle = right / 2;
-		while (left != right) {
-			if (arraySorted[middle] == aim) {
+		while (left < right) {
+			if (number <= arraySorted[middle]) {
 				right = middle;
-			} else {
+			} else  {
 				left = middle + 1;
 			}
-			middle = (right + left) / 2;
+			middle = (left + right) / 2;
 		}
-		return right;
+		
+		return arraySorted[middle]==number? middle: -1;
 	}
 
 	/**
@@ -148,20 +140,48 @@ public class MyArrays {
 	/**
 	 * 
 	 * @param array
-	 * @return true if only one replace is needed to the array be sorted
+	 * @return true if only one SWAP is needed to the array be sorted
 	 */
-	public static boolean oneReplaceNeeded(int[] array) {
-		int unsorted = 0;
-		if (array.length > 1) {
-			int i = 0;
-			do {
-				if (array[i] > array[i + 1]) {
-					unsorted++;
-				}
-				i++;
-			} while (unsorted < 2 && i < array.length - 1);
+	public static boolean isOneSwap(int[] array) {
+		boolean res = false;
+		int[] unsortedIndexes = new int[2];
+		int unsortedCount = getUnsortedIndexes(array, unsortedIndexes);
+		if (unsortedCount == 1) {
+			res = (unsortedIndexes[0] == 0 && array[unsortedIndexes[0]] <= array[unsortedIndexes[0] + 2])
+					|| (unsortedIndexes[0] == array.length - 2
+							&& array[unsortedIndexes[0] + 1] >= array[unsortedIndexes[0] - 1])
+					|| (array[unsortedIndexes[0]] <= array[unsortedIndexes[0] + 2]
+							&& array[unsortedIndexes[0] + 1] >= array[unsortedIndexes[0] - 1]);
+		} else if (unsortedCount == 2) {
+			int a = array[unsortedIndexes[0]], b = array[unsortedIndexes[1] + 1];
+			boolean isLeftFits = (unsortedIndexes[0] == 0 || b >= array[unsortedIndexes[0] - 1])
+					&& b <= array[unsortedIndexes[0] + 1];
+			boolean isRightFits = a >= array[unsortedIndexes[1]]
+					&& (unsortedIndexes[1] + 1 == array.length - 1 || a <= array[unsortedIndexes[1] + 2]);
+			res = isLeftFits && isRightFits;
 		}
-		return unsorted == 1;
+		return res;
+	}
+
+	/**
+	 * fill the unsortedIndexes array with indexes of unsorted elements
+	 * @param array
+	 * @param unsortedIndexes
+	 * @return number of unsorted elements 
+	 */
+	private static int getUnsortedIndexes(int[] array, int[] unsortedIndexes) {
+		int i = 0;
+		int unsortedCount = 0;
+		while (i < array.length - 1 && unsortedCount < 3) {
+			if (array[i] > array[i + 1]) {
+				unsortedCount++;
+				if (unsortedCount < 3) {
+					unsortedIndexes[unsortedCount - 1] = i;
+				}
+			}
+			i++;
+		}
+		return unsortedCount;
 	}
 
 	/**
@@ -178,33 +198,26 @@ public class MyArrays {
 	 */
 	public static int arrayBubbleSorter(int[] arrayUnsorted) {
 		int cycleNum = 0; // number of the cycle (some elements are sorted on each cycle)
-		int temp = 0; // temporary variable to store elements'values
-		int left = 0; // index of the left edge of span
 		int replaceNum = arrayUnsorted.length; // if on the previous cycle there wasn't replacing the array is always
 												// sorted - no need to sort more
 		while (cycleNum < arrayUnsorted.length - 1 && replaceNum > 0) {
 			replaceNum = 0;
-			for (int i = left; i < arrayUnsorted.length - 1 - cycleNum; i++) {
-				if (arrayUnsorted[i] > arrayUnsorted[i + 1]) {
-					temp = arrayUnsorted[i + 1];
-					arrayUnsorted[i + 1] = arrayUnsorted[i];
-					arrayUnsorted[i] = temp;
-
-					replaceNum++;
-				}
-				// checking the minimum value on every iteration
-				if (arrayUnsorted[left] > arrayUnsorted[i]) {
-					temp = arrayUnsorted[left];
-					arrayUnsorted[left] = arrayUnsorted[i];
-					arrayUnsorted[i] = temp;
-				}
-
+			for (int i = 0; i < arrayUnsorted.length - 1 - cycleNum; i++) {
+				replaceNum += moveGreaterRight(arrayUnsorted, i);
 			}
-			left++;
 			cycleNum++;
 		}
 		return cycleNum;
 	}
 
-
+	private static int moveGreaterRight(int[] arrayUnsorted, int i) {
+		int res = 0;
+		if (arrayUnsorted[i] > arrayUnsorted[i + 1]) {
+			int temp = arrayUnsorted[i + 1];
+			arrayUnsorted[i + 1] = arrayUnsorted[i];
+			arrayUnsorted[i] = temp;
+			res++;
+		}
+		return res;
+	}
 }
