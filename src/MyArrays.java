@@ -68,10 +68,10 @@ public class MyArrays {
 	 *         unsorted array O[LogN] - search number in sorted (binary search)
 	 */
 	public static int binarySearch(int arraySorted[], int number) {
-		int  left = 0;
+		int left = 0;
 		int right = arraySorted.length - 1;
 		int middle = arraySorted.length / 2;
-		while(left <= right && arraySorted[left] != number) {
+		while (left <= right && arraySorted[left] != number) {
 			if (number <= arraySorted[middle]) {
 				right = middle - 1;
 			} else {
@@ -79,7 +79,7 @@ public class MyArrays {
 			}
 			middle = (left + right) / 2;
 		}
-		return  left < arraySorted.length && arraySorted[left] == number ? left : -left - 1;
+		return left < arraySorted.length && arraySorted[left] == number ? left : -left - 1;
 	}
 
 	public static boolean isOneSwapForSorted(int array[]) {
@@ -128,10 +128,9 @@ public class MyArrays {
 
 	private static boolean checkTwoIndexes(int[] array, int index1, int index2) {
 
-		return (index2 == array.length - 1 || array[index1] <= array[index2 + 1]) 
-				&& array[index2] <= array[index1 + 1]
+		return (index2 == array.length - 1 || array[index1] <= array[index2 + 1]) && array[index2] <= array[index1 + 1]
 				&& (index1 == 0 || array[index2] >= array[index1 - 1]);
-		
+
 	}
 
 	private static boolean checkOneIndex(int[] array, int index) {
@@ -144,13 +143,13 @@ public class MyArrays {
 		int unsortedLength = array.length;
 		do {
 			unsortedLength = moveGreaterRight(array, unsortedLength - 1);
-		}while(unsortedLength != 0);
+		} while (unsortedLength != 0);
 	}
 
 	static private int moveGreaterRight(int[] array, int length) {
 		int res = 0;
 		for (int i = 0; i < length; i++) {
-			if(array[i] > array[i + 1]) {
+			if (array[i] > array[i + 1]) {
 				res = i + 1;
 				swap(array, i, i + 1);
 			}
@@ -162,9 +161,9 @@ public class MyArrays {
 		int tmp = array[i];
 		array[i] = array[j];
 		array[j] = tmp;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param array of short positive numbers
@@ -173,16 +172,17 @@ public class MyArrays {
 	 */
 	static public boolean isSum2(short array[], short sum) {
 		boolean res = false;
-		if (sum>-1) {		
-			long indexes = -1L;
-			int i = 0;
-			while (i<array.length && !res) {
-				if (BitOperations.getBitValue(indexes, sum-array[i]) == 0) {
+		if (sum > -1) {
+			int indexes[] = new int[sum + 1];			
+			short i = 0;
+			while (i < array.length && !res && array[i] > -1) {
+				if (sum > array[i] && array[indexes[sum - array[i]]] + array[i] == sum) {
 					res = true;
-				} else {
-					indexes = BitOperations.setBitValue(indexes, Math.abs(array[i]), false);
-					i++;
 				}
+				if (sum >= array[i]) {
+					indexes[array[i]] = i;
+				}
+				i++;
 			}
 		}
 		return res;
