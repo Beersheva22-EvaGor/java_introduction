@@ -6,34 +6,33 @@ public class MyArrays {
 	 * 
 	 * @param array
 	 * @param number
-	 * @return new array that consists of all the elements of the array in an input
-	 *         argument with added a given number
+	 * @return new array with added at end a given number
 	 */
 	public static int[] addsNumber(int[] array, int number) {
-		int[] resArray = Arrays.copyOf(array, array.length + 1);
-		resArray[resArray.length - 1] = number;
-		return resArray;
+		// use standard class Arrays, method copyOf
+		int res[] = Arrays.copyOf(array, array.length + 1);
+		res[array.length] = number;
+		return res;
 	}
 
 	/**
 	 * 
 	 * @param array
 	 * @param index
-	 * @return new array with no number at a given index in a given array
-	 * 
-	 *         if index does not exist in a given array it return the same array
+	 * @return new array with no number at a given index in a given array if index
+	 *         doesn't exist in a given array it returns the same array
 	 */
 	public static int[] removeNumber(int array[], int index) {
-		int[] dest;
-		if (index > -1 && index < array.length) {
-			dest = new int[array.length - 1];
-			System.arraycopy(array, 0, dest, 0, index);
-			// if (index < array.length - 1)
-			System.arraycopy(array, index + 1, dest, index, array.length - index - 1);
-		} else
-			dest = array;
+		// use standard class System, method arraycopy
 
-		return dest;
+		int res[] = array;
+		if (index > -1 && index < array.length) {
+			res = new int[array.length - 1];
+			System.arraycopy(array, 0, res, 0, index);
+			System.arraycopy(array, index + 1, res, index, res.length - index);
+		}
+
+		return res;
 	}
 
 	/**
@@ -43,181 +42,150 @@ public class MyArrays {
 	 * @return new array with inserted number at an index for keeping array sorted
 	 */
 	public static int[] insertSorted(int arraySorted[], int number) {
+		// use the method binarySearch of the standard class Arrays
+		// use the method arraycopy of the standard class System
 		int index = Arrays.binarySearch(arraySorted, number);
-
 		if (index < 0) {
 			index = -(index + 1);
 		}
-
 		return insertAtIndex(arraySorted, number, index);
+
 	}
 
-	/**
-	 * Additional method
-	 * 
-	 * @param array
-	 * @param number
-	 * @param index
-	 * @return the new array with inserted number on the index - position
-	 * 
-	 *         if index out of possible range it returns the initial array
-	 */
 	private static int[] insertAtIndex(int[] array, int number, int index) {
-		int[] dest = new int[array.length + 1];
-		System.arraycopy(array, 0, dest, 0, index);
-		dest[index] = number;
-		System.arraycopy(array, index, dest, index + 1, array.length - index);
-
-		return dest;
+		int res[] = new int[array.length + 1];
+		System.arraycopy(array, 0, res, 0, index);
+		res[index] = number;
+		System.arraycopy(array, index, res, index + 1, array.length - index);
+		return res;
 	}
 
 	/**
 	 * 
 	 * @param arraySorted
 	 * @param number
-	 * @return index value if number exists or -1 O[N] - search number in unsorted
-	 *         array O[LogN] - search number in sorted (binary search)
+	 * @return index value if number exists otherwise -1 O[N] - search number in
+	 *         unsorted array O[LogN] - search number in sorted (binary search)
 	 */
-	private static int left_global = 0;
-	private static int right_global = 0;
-
 	public static int binarySearch(int arraySorted[], int number) {
-		int left = 0;
+		int  left = 0;
 		int right = arraySorted.length - 1;
-		int middle = right / 2;
-		while (left <= right && arraySorted[middle] != number) {
-			if (number < arraySorted[middle]) {
+		int middle = arraySorted.length / 2;
+		while(left <= right && arraySorted[left] != number) {
+			if (number <= arraySorted[middle]) {
 				right = middle - 1;
 			} else {
 				left = middle + 1;
 			}
 			middle = (left + right) / 2;
 		}
-		left_global = left;
-		right_global = right;
-		return left > right ? -1 : middle;
-
+		return  left < arraySorted.length && arraySorted[left] == number ? left : -left - 1;
 	}
 
-	/**
-	 * 
-	 * @param arraySorted
-	 * @param number
-	 * @return first index of aiming number
-	 */
-	public static int binarySearchFirst(int arraySorted[], int number) {
-		int left = 0;
-		int right = arraySorted.length - 1;
-		int middle = right / 2;
-		while (left < right) {
-			if (number <= arraySorted[middle]) {
-				right = middle;
-			} else  {
-				left = middle + 1;
-			}
-			middle = (left + right) / 2;
-		}
-		
-		return arraySorted[middle]==number? middle: -1;
-	}
+	public static boolean isOneSwapForSorted(int array[]) {
 
-	/**
-	 * 
-	 * @param arraySorted
-	 * @param number
-	 * @return analog of Arrays.binarySearch implemented by global variables of the
-	 *         realized above method
-	 */
-	public static int binarySearchInt(int[] arraySorted, int number) {
+		// The method returns true if an given array is not sorted
+		// but to do it sorted there should be done only one swap of any numbers (not
+		// mandatory
+		// that the being swapped numbers placed one after other)
 
-		int res = binarySearch(arraySorted, number);
-		if (res == -1 && left_global > right_global) {
-			res = -(left_global + 1);
-		}
-		return res;
-	}
-
-	/**
-	 * 
-	 * @param array
-	 * @return true if only one SWAP is needed to the array be sorted
-	 */
-	public static boolean isOneSwap(int[] array) {
-		boolean res = false;
-		int[] unsortedIndexes = new int[2];
-		int unsortedCount = getUnsortedIndexes(array, unsortedIndexes);
-		if (unsortedCount == 1) {
-			res = (unsortedIndexes[0] == 0 && array[unsortedIndexes[0]] <= array[unsortedIndexes[0] + 2])
-					|| (unsortedIndexes[0] == array.length - 2
-							&& array[unsortedIndexes[0] + 1] >= array[unsortedIndexes[0] - 1])
-					|| (array[unsortedIndexes[0]] <= array[unsortedIndexes[0] + 2]
-							&& array[unsortedIndexes[0] + 1] >= array[unsortedIndexes[0] - 1]);
-		} else if (unsortedCount == 2) {
-			int a = array[unsortedIndexes[0]], b = array[unsortedIndexes[1] + 1];
-			boolean isLeftFits = (unsortedIndexes[0] == 0 || b >= array[unsortedIndexes[0] - 1])
-					&& b <= array[unsortedIndexes[0] + 1];
-			boolean isRightFits = a >= array[unsortedIndexes[1]]
-					&& (unsortedIndexes[1] + 1 == array.length - 1 || a <= array[unsortedIndexes[1] + 2]);
-			res = isLeftFits && isRightFits;
-		}
-		return res;
-	}
-
-	/**
-	 * fill the unsortedIndexes array with indexes of unsorted elements
-	 * @param array
-	 * @param unsortedIndexes
-	 * @return number of unsorted elements 
-	 */
-	private static int getUnsortedIndexes(int[] array, int[] unsortedIndexes) {
+		int index1 = -1;
+		int index2 = -1;
+		int length = array.length - 1;
+		int equaledCount = 0;
+		boolean res = true;
 		int i = 0;
-		int unsortedCount = 0;
-		while (i < array.length - 1 && unsortedCount < 3) {
+		while (i < length && res) {
 			if (array[i] > array[i + 1]) {
-				unsortedCount++;
-				if (unsortedCount < 3) {
-					unsortedIndexes[unsortedCount - 1] = i;
+				if (index1 == -1) {
+					index1 = i - equaledCount;
+					if (equaledCount > 0) {
+						index2 = i + 1;
+					}
+				} else if (index2 != -1) {
+					res = false;
+				} else {
+					index2 = i + 1;
 				}
+			} else if (array[i] == array[i + 1]) {
+				equaledCount++;
+			} else if (array[i] < array[i + 1]) {
+				if (equaledCount != 0 && index1 != -1 && index2 == -1 && array[i] < array[index1]) {
+					index2 = i;
+				}
+				equaledCount = 0;
 			}
 			i++;
 		}
-		return unsortedCount;
+		return index1 != -1 && res ? checkIndexes(array, index1, index2) : false;
+
 	}
 
-	/**
-	 * This bubble method uses an idea of going out of the cycle if there was no
-	 * replacing on the previous cycle (array is always sorted) and combined with
-	 * the idea of sending minimal element on every iteration to the left corner of
-	 * current span (therefore left edge of the sorting span moves right on every
-	 * iteration)
-	 * 
-	 * Initial array is sorted after the method finishes
-	 * 
-	 * @param arrayUnsorted
-	 * @return number of cycles needed to sort
-	 */
-	public static int arrayBubbleSorter(int[] arrayUnsorted) {
-		int cycleNum = 0; // number of the cycle (some elements are sorted on each cycle)
-		int replaceNum = arrayUnsorted.length; // if on the previous cycle there wasn't replacing the array is always
-												// sorted - no need to sort more
-		while (cycleNum < arrayUnsorted.length - 1 && replaceNum > 0) {
-			replaceNum = 0;
-			for (int i = 0; i < arrayUnsorted.length - 1 - cycleNum; i++) {
-				replaceNum += moveGreaterRight(arrayUnsorted, i);
-			}
-			cycleNum++;
-		}
-		return cycleNum;
+	private static boolean checkIndexes(int[] array, int index1, int index2) {
+
+		return index2 == -1 ? checkOneIndex(array, index1) : checkTwoIndexes(array, index1, index2);
 	}
 
-	private static int moveGreaterRight(int[] arrayUnsorted, int i) {
+	private static boolean checkTwoIndexes(int[] array, int index1, int index2) {
+
+		return (index2 == array.length - 1 || array[index1] <= array[index2 + 1]) 
+				&& array[index2] <= array[index1 + 1]
+				&& (index1 == 0 || array[index2] >= array[index1 - 1]);
+		
+	}
+
+	private static boolean checkOneIndex(int[] array, int index) {
+
+		return (index == array.length - 2 || array[index] <= array[index + 2])
+				&& (index == 0 || array[index + 1] >= array[index - 1]);
+	}
+
+	static public void bubbleSort(int[] array) {
+		int unsortedLength = array.length;
+		do {
+			unsortedLength = moveGreaterRight(array, unsortedLength - 1);
+		}while(unsortedLength != 0);
+	}
+
+	static private int moveGreaterRight(int[] array, int length) {
 		int res = 0;
-		if (arrayUnsorted[i] > arrayUnsorted[i + 1]) {
-			int temp = arrayUnsorted[i + 1];
-			arrayUnsorted[i + 1] = arrayUnsorted[i];
-			arrayUnsorted[i] = temp;
-			res++;
+		for (int i = 0; i < length; i++) {
+			if(array[i] > array[i + 1]) {
+				res = i + 1;
+				swap(array, i, i + 1);
+			}
 		}
 		return res;
 	}
+
+	static private void swap(int[] array, int i, int j) {
+		int tmp = array[i];
+		array[i] = array[j];
+		array[j] = tmp;
+		
+	}
+	
+	/**
+	 * 
+	 * @param array of short positive numbers
+	 * @param sum
+	 * @return true if array contains two numbers, sum of which equals a given sum
+	 */
+	static public boolean isSum2(short array[], short sum) {
+		boolean res = false;
+		if (sum>-1) {			
+			short length = Short.MAX_VALUE;
+			short indexes[] = new short[length];
+			short i = 0;
+			while (i<array.length && !res && array[i]>-1) {
+				if (sum - array[i]>-1 && indexes[sum - array[i]] <i && array[indexes[sum - array[i]]]+ array[i] == sum ) {
+					res = true;
+				}
+				indexes[array[i]] = i;
+				i++;
+			}
+		}
+		return res;
+	}
+
 }
