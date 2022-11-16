@@ -26,13 +26,14 @@ public class MatricesTest {
 	@Test
 	void isSum2Test()
 	{
-		short[] array = {1, 22, 3, 17, 18, 0, 4};
+		short[] array = {1, 22, 3, 17, 0, 18, 4};
 		
 		assertTrue(MyArrays.isSum2(array, (short)5)); // on corners
 		assertTrue(MyArrays.isSum2(array, (short)40)); // middle
 		assertTrue(MyArrays.isSum2(array, (short)17)); // with 0 
 		
 		assertFalse(MyArrays.isSum2(array,(short) 0));
+		assertFalse(MyArrays.isSum2(array,(short) 16));
 		
 		array = new short[]{1, 22, 3, 3, 17, 17, 18, 0, 4};
 		assertTrue(MyArrays.isSum2(array, (short)20)); // middle

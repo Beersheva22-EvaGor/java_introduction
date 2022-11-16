@@ -173,16 +173,16 @@ public class MyArrays {
 	 */
 	static public boolean isSum2(short array[], short sum) {
 		boolean res = false;
-		if (sum>-1) {			
-			short length = Short.MAX_VALUE;
-			short indexes[] = new short[length];
-			short i = 0;
-			while (i<array.length && !res && array[i]>-1) {
-				if (sum - array[i]>-1 && indexes[sum - array[i]] <i && array[indexes[sum - array[i]]]+ array[i] == sum ) {
+		if (sum>-1) {		
+			long indexes = -1L;
+			int i = 0;
+			while (i<array.length && !res) {
+				if (BitOperations.getBitValue(indexes, sum-array[i]) == 0) {
 					res = true;
+				} else {
+					indexes = BitOperations.setBitValue(indexes, Math.abs(array[i]), false);
+					i++;
 				}
-				indexes[array[i]] = i;
-				i++;
 			}
 		}
 		return res;
