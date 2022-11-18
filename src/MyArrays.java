@@ -167,7 +167,7 @@ public class MyArrays {
 	/**
 	 * 
 	 * @param array of short positive numbers
-	 * @param sum
+	 * @param sum3
 	 * @return true if array contains two numbers, sum of which equals a given sum
 	 */
 	static public boolean isSum2(short array[], short sum) {
