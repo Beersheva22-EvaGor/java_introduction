@@ -35,6 +35,22 @@ class ObjectTests {
 		
 		assertFalse(Strings.isAnagram("1h p", "1hp  ")); // different length
 		assertFalse(Strings.isAnagram("1h pi", "1hp  ")); // same length different letters
+		
+		String word = "yellow";
+		assertTrue(Strings.isAnagram(word, "loweyl"));
+		assertTrue(Strings.isAnagram(word, "elolyw"));
+		assertTrue(Strings.isAnagram(word, "wolley"));
+		assertTrue(Strings.isAnagram(word, "loleyw"));
+		assertFalse(Strings.isAnagram(word,""));
+		assertFalse(Strings.isAnagram(word, "yellob"));
+		assertFalse(Strings.isAnagram(word,"yello"));
+		assertFalse(Strings.isAnagram(word,"yelllo"));
 	}
 
+	@Test
+	void sortStringNumbersTest() {
+		String[] strNumArr = {Integer.toString(Byte.MAX_VALUE),"24", "-10", "78", "0", "11", "24", "-100", "-100", Integer.toString(Byte.MIN_VALUE)};
+		Strings.sortStringNumbers(strNumArr);
+		assertArrayEquals(new String[]{Integer.toString(Byte.MIN_VALUE), "-100", "-100", "-10",  "0", "11", "24", "24", "78", Integer.toString(Byte.MAX_VALUE) }, strNumArr);
+	}
 }
