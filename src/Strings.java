@@ -49,6 +49,5 @@ public class Strings {
 				j++;
 			}
 		}
-		System.out.print(false);
 	}
 }
