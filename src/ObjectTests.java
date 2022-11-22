@@ -96,6 +96,8 @@ class ObjectTests {
 		assertTrue("10.0.0.0".matches(Strings.ipV4()));		
 		assertFalse("256.0.0.0".matches(Strings.ipV4()));
 		assertFalse("-25.0.0.0".matches(Strings.ipV4()));
+		assertFalse("".matches(Strings.ipV4()));
+		assertFalse("-25.0.0".matches(Strings.ipV4()));
 		assertFalse("256.256.256.256".matches(Strings.ipV4()));
 	}
 }
