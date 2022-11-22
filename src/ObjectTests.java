@@ -91,7 +91,8 @@ class ObjectTests {
 	@Test
 	void ipV4Test() {
 		assertTrue("0.0.0.0".matches(Strings.ipV4()));
-		assertTrue("0.120.20.255".matches(Strings.ipV4()));
+		assertTrue("0.120.20.255".matches(Strings.ipV4())); 
+		
 		assertTrue("255.255.255.255".matches(Strings.ipV4()));
 		assertTrue("10.0.0.0".matches(Strings.ipV4()));		
 		assertFalse("256.0.0.0".matches(Strings.ipV4()));
