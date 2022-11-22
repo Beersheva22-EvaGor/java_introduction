@@ -48,6 +48,27 @@ public class Strings {
 				strNumArr[j] =  Integer.toString(i + Byte.MIN_VALUE);
 				j++;
 			}
-		}
+		}	
+		 
 	}
+	
+	public static String javaNameExp() {
+		
+		return "[a-zA-Z$][\\w$]*|_[\\w$]+";
+	}
+	public static String ip4Octet ( ) {
+		return "\\d{1,2}|1\\d\\d|2[0-4]\\d|25[0-5]";
+	}
+	
+	public static String ipV4() {
+		String res = "";
+		for (int i = 0; i<4; i++)
+		{
+			res +="("+ip4Octet()+")\\.";
+		}
+		return res.substring(0, res.length()-2);
+	}
+	
+	
+	
 }
