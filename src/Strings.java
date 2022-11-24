@@ -61,12 +61,8 @@ public class Strings {
 	}
 	
 	public static String ipV4() {
-		String res = "";
-		for (int i = 0; i<4; i++)
-		{
-			res +="("+ip4Octet()+")\\.";
-		}
-		return res.substring(0, res.length()-2);
+		String res = "(("+ip4Octet()+")\\.){3}"+"("+ip4Octet()+")";
+		return res;
 	}
 	
 	
