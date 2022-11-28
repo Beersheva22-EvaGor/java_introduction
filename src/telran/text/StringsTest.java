@@ -80,29 +80,32 @@ String word="yellow";
 		assertEquals(8.5, computeArithmenticExpression("a32i + 2*( c1 * 2 + 0.5)", new double[] {2, 1},
 				new String[] {"a32i", "c1"}));
 		
+		assertEquals(4, computeArithmenticExpression("$+2", new  double[]{2}, new String[]{"$"}));
 	}
 		
 	@Test
-	void arithmeticExpressionTest() {
-		assertTrue("2*(3+1)".matches(arithmeticExpression()));
-		assertTrue("(2*3+1)".matches(arithmeticExpression()));
-		assertTrue("10*(2)+3".matches(arithmeticExpression()));
-		assertTrue("(10*2+3))".matches(arithmeticExpression()));
+	void isArithmeticExpressionTest() {				
+		assertTrue(isArithmeticExpression("2*(3+1)"));
+		assertTrue(isArithmeticExpression("(2*3+1)"));
+		assertTrue(isArithmeticExpression("10*(2)+3"));
+		assertTrue(isArithmeticExpression("(10*2+3))"));
+		assertTrue(isArithmeticExpression("10*~gh3"));
 		
-		assertFalse("2(3+1)".matches(arithmeticExpression()));
-		assertFalse(")2(3+1)".matches(arithmeticExpression()));
-		assertFalse("2(-3+1)".matches(arithmeticExpression()));
-		assertFalse("10 (* 2)".matches(arithmeticExpression()));
-		assertFalse("10 * 2(())".matches(arithmeticExpression()));
-		assertFalse("10 * 2( +3)".matches(arithmeticExpression()));
-		assertFalse("10 * )2) + 3".matches(arithmeticExpression()));
+		assertFalse(isArithmeticExpression("2(3+1)"));
+		assertFalse(isArithmeticExpression(")2(3+1)"));
+		assertFalse(isArithmeticExpression("2(-3+1)"));
+		assertFalse(isArithmeticExpression("10 (* 2)"));
+		assertFalse(isArithmeticExpression("10 * 2(())"));
+		assertFalse(isArithmeticExpression("10 * 2( +3)"));
+		assertFalse(isArithmeticExpression("10 * )2) + 3"));
 		
 		// with variables
-		assertTrue("a1*(3+1)".matches(arithmeticExpression()));
-		assertTrue("a1*(bUhjks978l0+1)".matches(arithmeticExpression()));
-		assertFalse("10*~gh3".matches(arithmeticExpression()));
-		assertFalse("4a".matches(arithmeticExpression()));
+		assertTrue(isArithmeticExpression("a1*(3+1)"));
+		assertTrue(isArithmeticExpression("a1*(bUhjks978l0+1)"));
+		assertTrue(isArithmeticExpression("$46%h"));
+		assertFalse(isArithmeticExpression("4a"));
 	}
+	
 	
 	@Test
 	void getOperandValueTest() {

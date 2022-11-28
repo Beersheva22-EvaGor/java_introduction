@@ -100,7 +100,7 @@ public class Strings {
 	}
 
 	private static String operand() {
-		return "(\\d+\\.?\\d*|\\.\\d+|[a-zA-Z]\\w*)";
+		return "(\\d+\\.?\\d*|\\.\\d+|[a-zA-Z_#$%&?@~][\\w_#$%&?@~]*)";
 	}
 
 	public static boolean isArithmeticExpression(String expression) {
@@ -164,7 +164,7 @@ public class Strings {
 
 	protected static Double getOperandValue(String operand, double[] values, String[] names) {
 		Double res = Double.NaN;
-		if (operand.matches("^[a-zA-Z].*$")) {
+		if (operand.matches("^[a-zA-Z_#$%&?@~].*$")) {
 			int index = Arrays.binarySearch(names, operand);
 			if (index > -1) {
 				res = values[index];
@@ -181,17 +181,14 @@ public class Strings {
 	 *         open ones first
 	 */
 	private static boolean checkBraces(String expression) {
-		boolean noOpenBrace = false;
 		int i = 0;
 		int counter = 0;
-		while (i < expression.length() && !noOpenBrace) {
+		int length = expression.length();
+		while (i < length && counter > -1) {
 			if (expression.charAt(i) == '(') {
 				counter++;
 			} else if (expression.charAt(i) == ')') {
 				counter--;
-				if (counter < 0) {
-					noOpenBrace = true;
-				}
 			}
 			i++;
 		}
