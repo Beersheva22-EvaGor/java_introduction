@@ -89,12 +89,12 @@ String word="yellow";
 		assertTrue(isArithmeticExpression("(2*3+1)"));
 		assertTrue(isArithmeticExpression("10*(2)+3"));
 		assertTrue(isArithmeticExpression("(10*2+3))"));
-		assertTrue(isArithmeticExpression("10*~gh3"));
 		
 		assertFalse(isArithmeticExpression("2(3+1)"));
 		assertFalse(isArithmeticExpression(")2(3+1)"));
 		assertFalse(isArithmeticExpression("2(-3+1)"));
 		assertFalse(isArithmeticExpression("10 (* 2)"));
+		assertFalse(isArithmeticExpression("10*~gh3"));
 		assertFalse(isArithmeticExpression("10 * 2(())"));
 		assertFalse(isArithmeticExpression("10 * 2( +3)"));
 		assertFalse(isArithmeticExpression("10 * )2) + 3"));
@@ -102,7 +102,7 @@ String word="yellow";
 		// with variables
 		assertTrue(isArithmeticExpression("a1*(3+1)"));
 		assertTrue(isArithmeticExpression("a1*(bUhjks978l0+1)"));
-		assertTrue(isArithmeticExpression("$46%h"));
+		assertTrue(isArithmeticExpression("$46h"));
 		assertFalse(isArithmeticExpression("4a"));
 	}
 	

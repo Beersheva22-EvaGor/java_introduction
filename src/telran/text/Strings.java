@@ -3,6 +3,7 @@ package telran.text;
 import java.util.Arrays;
 
 public class Strings {
+	
 	/**
 	 * 
 	 * @param str1
@@ -100,7 +101,7 @@ public class Strings {
 	}
 
 	private static String operand() {
-		return "(\\d+\\.?\\d*|\\.\\d+|[a-zA-Z_#$%&?@~][\\w_#$%&?@~]*)";
+		return "(\\d+\\.?\\d*|\\.\\d+|"+javaNameExp()+")";
 	}
 
 	public static boolean isArithmeticExpression(String expression) {
@@ -164,7 +165,7 @@ public class Strings {
 
 	protected static Double getOperandValue(String operand, double[] values, String[] names) {
 		Double res = Double.NaN;
-		if (operand.matches("^[a-zA-Z_#$%&?@~].*$")) {
+		if (operand.matches("^"+ javaNameExp())) {
 			int index = Arrays.binarySearch(names, operand);
 			if (index > -1) {
 				res = values[index];
