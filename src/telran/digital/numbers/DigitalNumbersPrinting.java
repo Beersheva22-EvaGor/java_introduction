@@ -2,26 +2,38 @@ package telran.digital.numbers;
 
 public class DigitalNumbersPrinting {
 	private static final String SYMBOL = "*";
+	private static final int COUNT_NUMBERS = 10;
+	private static String[][] DISPLAY_NUMBERS ;
 
 	public static void displayDigitalNumber(int number, int offset, int width, int height) {
-		// TODO
 		String[] res = new String[height];
+		DISPLAY_NUMBERS = new String[COUNT_NUMBERS][];
 		java.util.Arrays.fill(res,"");
-
-		String[][] displayNumbers = { zero(offset, width, height), one(offset, width, height), two(offset, width, height),
-				three(offset, width, height), four(offset, width, height), five(offset, width, height),
-				six(offset, width, height), seven(offset, width, height), eight(offset, width, height),
-				nine(offset, width, height) };
+		
 		int[] digits = getDigits(number);
 		for (int i = 0; i < digits.length; i++) {
-			res = attendDigit(offset, width, res, displayNumbers, digits, i);
+			res = attendDigit(offset, width, height,  res, DISPLAY_NUMBERS, digits, i);
 		}		
 		displayStrings(res);
 	}
 
 
-	private static String[] attendDigit(int offset, int width, String[] res, String[][] displayNumbers, int[] digits, int i) {
+	private static String[] attendDigit(int offset, int width, int height, String[] res, String[][] displayNumbers, int[] digits, int i) {
 		for (var j = 0; j < res.length; j++) {
+			if (displayNumbers[digits[i]]==null) {
+				switch (digits[i]) {
+				case 0: displayNumbers[digits[i]] = zero(offset, width, height); break;
+				case 1: displayNumbers[digits[i]] = one(offset, width, height); break;
+				case 2: displayNumbers[digits[i]] = two(offset, width, height); break;
+				case 3: displayNumbers[digits[i]] = three(offset, width, height); break;
+				case 4: displayNumbers[digits[i]] = four(offset, width, height); break;
+				case 5: displayNumbers[digits[i]] = five(offset, width, height); break;
+				case 6: displayNumbers[digits[i]] = six(offset, width, height); break;
+				case 7: displayNumbers[digits[i]] = seven(offset, width, height); break;
+				case 8: displayNumbers[digits[i]] = eight(offset, width, height); break;
+				case 9: displayNumbers[digits[i]] = nine(offset, width, height); break;
+				}					 
+			}
 			res[j]+= displayNumbers[digits[i]][j];
 			// add spaces to row digits
 			String spaces = " ".repeat((i+1)*(width+offset) - res[j].length());

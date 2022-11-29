@@ -63,6 +63,8 @@ class DigitalPrintingTest {
 	void displayDigitalNumberTest() {
 		displayDigitalNumber(1234567890, 10,5,6);
 		System.out.println();
-		displayDigitalNumber(456123, 10,5,6);
+		displayDigitalNumber(4546123, 5,5,3);
+		System.out.println();
+		displayDigitalNumber(300549, 15,7,4);
 	}
 }
