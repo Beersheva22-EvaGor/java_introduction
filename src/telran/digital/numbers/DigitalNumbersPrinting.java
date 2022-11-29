@@ -8,7 +8,7 @@ public class DigitalNumbersPrinting {
 		String[] res = new String[height];
 		java.util.Arrays.fill(res,"");
 
-		Object[] displayNumbers = { zero(offset, width, height), one(offset, width, height), two(offset, width, height),
+		String[][] displayNumbers = { zero(offset, width, height), one(offset, width, height), two(offset, width, height),
 				three(offset, width, height), four(offset, width, height), five(offset, width, height),
 				six(offset, width, height), seven(offset, width, height), eight(offset, width, height),
 				nine(offset, width, height) };
@@ -20,9 +20,9 @@ public class DigitalNumbersPrinting {
 	}
 
 
-	private static String[] attendDigit(int offset, int width, String[] res, Object[] displayNumbers, int[] digits, int i) {
+	private static String[] attendDigit(int offset, int width, String[] res, String[][] displayNumbers, int[] digits, int i) {
 		for (var j = 0; j < res.length; j++) {
-			res[j]+= ((String[])displayNumbers[digits[i]])[j];
+			res[j]+= displayNumbers[digits[i]][j];
 			// add spaces to row digits
 			String spaces = " ".repeat((i+1)*(width+offset) - res[j].length());
 			res[j]+=spaces;
