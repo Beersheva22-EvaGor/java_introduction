@@ -57,7 +57,7 @@ class DigitalPrintingTest {
 	void nineTest() {
 		displayStrings(nine(30,5,6));
 	}
-
+ 
 	
 	@Test
 	void displayDigitalNumberTest() {

@@ -15,8 +15,7 @@ public class DigitalNumbersPrinting {
 		int[] digits = getDigits(number);
 		for (int i = 0; i < digits.length; i++) {
 			res = attendDigit(offset, width, res, displayNumbers, digits, i);
-		}
-		
+		}		
 		displayStrings(res);
 	}
 
